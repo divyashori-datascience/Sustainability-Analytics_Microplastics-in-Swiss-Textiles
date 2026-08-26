@@ -1,0 +1,211 @@
+source,target,value
+Clothing,Mixed waste collection,13.56
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Clothing,Text. waste collection,6.964
+Text. waste collection,Export,8.055
+Text. waste collection,Textile reuse,0.03653
+Text. waste collection,Incineration,0.175
+Incineration,Elimination,103.3
+Clothing,Dumping,0.005543
+Dumping,Litter (residential),0.005566
+Litter (residential),Residential soil,0.0863
+Litter (residential),Storm water,0.07475
+Storm water,Surface water,0.03705
+Storm water,WWTP,0.0377
+WWTP,Incineration,0.1379
+Incineration,Elimination,103.3
+WWTP,CSO,0.007357
+CSO,Incineration,0.003678
+Incineration,Elimination,103.3
+CSO,Surface water,0.003679
+WWTP,Primary WWT,0.08286
+Primary WWT,Sludge,0.04572
+Sludge,Incineration,0.08874
+Incineration,Elimination,103.3
+Primary WWT,Secondary WWT,0.03714
+Secondary WWT,Sludge,0.03714
+Sludge,Incineration,0.08874
+Incineration,Elimination,103.3
+Incineration,Elimination,103.3
+Litter (residential),Surface water,0.007485
+Litter (residential),Mixed waste collection,7.188
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Dumping,Litter (roads),0.01754
+Litter (roads),Road side,1.246
+Litter (roads),Mixed waste collection,1.349
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Dumping,Litter (nature),0.01148
+Litter (nature),Natural soil,0.1447
+Litter (nature),Mixed waste collection,0.1315
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Clothing,Waste water (MP),0.04988
+Waste water (MP),WWTP (MP),0.06096
+Incineration,Elimination,103.3
+WWTP (MP),CSO (MP),0.002005
+CSO (MP),Surface water (MP),0.002005
+WWTP (MP),Primary WWT (MP),0.05948
+Primary WWT (MP),Sludge (MP),0.05598
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Primary WWT (MP),Secondary WWT (MP),0.003501
+Secondary WWT (MP),Sludge (MP),0.001875
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Secondary WWT (MP),Tertiary WWT (MP),0.001574
+Tertiary WWT (MP),Incineration,0.00112
+Incineration,Elimination,103.3
+Waste water (MP),OSSF (MP),0.002107
+OSSF (MP),Sludge (MP),0.001994
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Waste water (MP),Subsurface (MP),0.007509
+Clothing,Outdoor air (MP),0.01008
+Outdoor air (MP),Residential soil (MP),0.002589
+Outdoor air (MP),Natural soil (MP),0.01638
+Outdoor air (MP),Agricultural soil (MP),0.01199
+Outdoor air (MP),Surface water (MP),0.001508
+Clothing,Indoor air (MP),0.03242
+Indoor air (MP),Outdoor air (MP),0.01994
+Outdoor air (MP),Residential soil (MP),0.002589
+Outdoor air (MP),Natural soil (MP),0.01638
+Outdoor air (MP),Agricultural soil (MP),0.01199
+Outdoor air (MP),Surface water (MP),0.001508
+Indoor air (MP),Floors (MP),0.04099
+Floors (MP),Waste water (MP),0.00619
+Waste water (MP),WWTP (MP),0.06096
+Incineration,Elimination,103.3
+WWTP (MP),CSO (MP),0.002005
+CSO (MP),Surface water (MP),0.002005
+WWTP (MP),Primary WWT (MP),0.05948
+Primary WWT (MP),Sludge (MP),0.05598
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Primary WWT (MP),Secondary WWT (MP),0.003501
+Secondary WWT (MP),Sludge (MP),0.001875
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Secondary WWT (MP),Tertiary WWT (MP),0.001574
+Tertiary WWT (MP),Incineration,0.00112
+Incineration,Elimination,103.3
+Waste water (MP),OSSF (MP),0.002107
+OSSF (MP),Sludge (MP),0.001994
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Waste water (MP),Subsurface (MP),0.007509
+Floors (MP),Mixed waste collection,0.0348
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Household textiles,Household textiles,12.98
+Household textiles,Mixed waste collection,12.51
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Household textiles,Text. waste collection,0.4392
+Text. waste collection,Export,8.055
+Text. waste collection,Textile reuse,0.03653
+Text. waste collection,Incineration,0.175
+Incineration,Elimination,103.3
+Household textiles,Dumping,0.003474
+Dumping,Litter (residential),0.005566
+Litter (residential),Residential soil,0.0863
+Litter (residential),Storm water,0.07475
+Storm water,Surface water,0.03705
+Storm water,WWTP,0.0377
+WWTP,Incineration,0.1379
+Incineration,Elimination,103.3
+WWTP,CSO,0.007357
+CSO,Incineration,0.003678
+Incineration,Elimination,103.3
+CSO,Surface water,0.003679
+WWTP,Primary WWT,0.08286
+Primary WWT,Sludge,0.04572
+Sludge,Incineration,0.08874
+Incineration,Elimination,103.3
+Primary WWT,Secondary WWT,0.03714
+Secondary WWT,Sludge,0.03714
+Sludge,Incineration,0.08874
+Incineration,Elimination,103.3
+Incineration,Elimination,103.3
+Litter (residential),Surface water,0.007485
+Litter (residential),Mixed waste collection,7.188
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Dumping,Litter (roads),0.01754
+Litter (roads),Road side,1.246
+Litter (roads),Mixed waste collection,1.349
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Dumping,Litter (nature),0.01148
+Litter (nature),Natural soil,0.1447
+Litter (nature),Mixed waste collection,0.1315
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
+Household textiles,Waste water (MP),0.005921
+Waste water (MP),WWTP (MP),0.06096
+Incineration,Elimination,103.3
+WWTP (MP),CSO (MP),0.002005
+CSO (MP),Surface water (MP),0.002005
+WWTP (MP),Primary WWT (MP),0.05948
+Primary WWT (MP),Sludge (MP),0.05598
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Primary WWT (MP),Secondary WWT (MP),0.003501
+Secondary WWT (MP),Sludge (MP),0.001875
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Secondary WWT (MP),Tertiary WWT (MP),0.001574
+Tertiary WWT (MP),Incineration,0.00112
+Incineration,Elimination,103.3
+Waste water (MP),OSSF (MP),0.002107
+OSSF (MP),Sludge (MP),0.001994
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Waste water (MP),Subsurface (MP),0.007509
+Outdoor air (MP),Residential soil (MP),0.002589
+Outdoor air (MP),Natural soil (MP),0.01638
+Outdoor air (MP),Agricultural soil (MP),0.01199
+Outdoor air (MP),Surface water (MP),0.001508
+Household textiles,Indoor air (MP),0.02214
+Indoor air (MP),Outdoor air (MP),0.01994
+Outdoor air (MP),Residential soil (MP),0.002589
+Outdoor air (MP),Natural soil (MP),0.01638
+Outdoor air (MP),Agricultural soil (MP),0.01199
+Outdoor air (MP),Surface water (MP),0.001508
+Indoor air (MP),Floors (MP),0.04099
+Floors (MP),Waste water (MP),0.00619
+Waste water (MP),WWTP (MP),0.06096
+Incineration,Elimination,103.3
+WWTP (MP),CSO (MP),0.002005
+CSO (MP),Surface water (MP),0.002005
+WWTP (MP),Primary WWT (MP),0.05948
+Primary WWT (MP),Sludge (MP),0.05598
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Primary WWT (MP),Secondary WWT (MP),0.003501
+Secondary WWT (MP),Sludge (MP),0.001875
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Secondary WWT (MP),Tertiary WWT (MP),0.001574
+Tertiary WWT (MP),Incineration,0.00112
+Incineration,Elimination,103.3
+Waste water (MP),OSSF (MP),0.002107
+OSSF (MP),Sludge (MP),0.001994
+Sludge (MP),Incineration,0.05985
+Incineration,Elimination,103.3
+Waste water (MP),Subsurface (MP),0.007509
+Floors (MP),Mixed waste collection,0.0348
+Mixed waste collection,Incineration,96.35
+Incineration,Elimination,103.3
+Mixed waste collection,Residential soil,0.009663
