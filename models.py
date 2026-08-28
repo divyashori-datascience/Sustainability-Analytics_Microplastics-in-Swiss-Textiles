@@ -1,5 +1,5 @@
 """
-Re:Nova — Data models.
+Data models.
 
 Covers: Session, raw answers, greenwashing flags, and the two Stage 1 outputs
 (Certification Relevance Map + Internal Greenwashing Risk Assessment).
