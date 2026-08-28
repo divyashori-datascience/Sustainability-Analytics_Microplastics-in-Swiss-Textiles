@@ -1,5 +1,5 @@
 """
-Re:Nova — Stage 1 agentic questionnaire engine.
+Stage 1 agentic questionnaire engine.
 
 Drives a natural conversation that covers all 21 Stage 1 questions,
 silently records answers via tool calls, and generates both outputs
@@ -208,7 +208,7 @@ class Stage1Engine:
 
     def _tool_complete_stage1(self, session: Session, args: dict) -> str:
         """
-        Claude calls this when all 21 questions have been answered.
+        The Agent calls this when all 21 questions have been answered.
         Generates both Stage 1 outputs and marks the session complete.
         """
         # ── 1. Generate Certification Relevance Map ──
