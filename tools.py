@@ -1,5 +1,5 @@
 """
-Re:Nova — Claude tool definitions for the Stage 1 intake agent.
+The tool definitions for the Stage 1 intake agent.
 """
 
 RECORD_ANSWER_TOOL = {
