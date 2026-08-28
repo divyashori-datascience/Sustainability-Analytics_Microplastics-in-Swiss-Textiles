@@ -1,5 +1,5 @@
 """
-Re:Nova — Stage 1 Onboarding Questionnaire.
+Stage 1 Onboarding Questionnaire.
 21 questions across 4 pillars, exactly as defined in the Re:Nova methodology.
 
 Each question carries:
