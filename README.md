@@ -1,7 +1,7 @@
 # The Synthetic Wardrobe
 ### Microplastic Pollution from Synthetic Textiles in Switzerland
 
-HSLU Sustainability Analytics — block-week group project (Prof. Salomon)
+HSLU Sustainability Analytics
 
 ## Research questions
 1. What share of Swiss plastic pollution comes from synthetic clothing?
@@ -10,8 +10,8 @@ HSLU Sustainability Analytics — block-week group project (Prof. Salomon)
 ## Team
 | Member | Focus |
 |---|---|
-| Hanieh Jebeli | Intro/storyline, data sourcing, structural model |
-| Divya Shori   | Agentic AI Assessment — RAG chatbot for brand sustainability verification (GOTS, OEKO-TEX, RCS, Fair Trade) |
+| Hanieh Jebeli | Intro/storyline, data sourcing, structural model |  RAG chatbot |
+| Divya Shori   | Agentic AI Assessment -  RAG chatbot | Modeling |
 | Rana          |  
 
 ## Repository structure
