@@ -10,8 +10,8 @@ HSLU Sustainability Analytics
 ## Team
 | Member | Focus |
 |---|---|
-| Hanieh Jebeli | Intro/storyline, data sourcing, structural model |  RAG chatbot |
-| Divya Shori   | Agentic AI Assessment -  RAG chatbot | Modeling |
+| Hanieh Jebeli | Intro/storyline, data sourcing, structural model -  RAG chatbot |
+| Divya Shori   | Agentic AI Assessment -  RAG chatbot -  Modeling |
 | Rana          |  
 
 ## Repository structure
