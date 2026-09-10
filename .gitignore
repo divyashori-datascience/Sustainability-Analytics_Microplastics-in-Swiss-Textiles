@@ -1,1 +1,6 @@
 data/processed/textile_apparel_imports.csv
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.idea/
