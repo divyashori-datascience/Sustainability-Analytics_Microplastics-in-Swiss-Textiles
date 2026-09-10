@@ -1,5 +1,7 @@
+## Project structure
+
+```text
 Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
-│
 ├── README.md
 ├── __init__.py
 │
@@ -8,7 +10,6 @@ Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
 │   │   ├── EMPA_clothing_endpoints_summary.csv
 │   │   ├── PET_clothing_sankey_data.csv
 │   │   └── Plastics-by-Type_EMPA.csv
-│   │
 │   └── processed/
 │
 ├── src/
