@@ -14,11 +14,11 @@ from typing import Optional
 
 import anthropic
 
-from .models import Session, Message, MessageRole, SessionStatus, QuestionAnswer
-from .tools import ALL_TOOLS
-from .prompts import SYSTEM_PROMPT, context_hint
-from .framework_matcher import match_frameworks
-from .greenwashing import run_greenwashing_check, check_answer_for_flags
+from src.models import Session, MessageRole, SessionStatus
+from tools import ALL_TOOLS
+from src.prompts import SYSTEM_PROMPT, context_hint
+from src.framework_matcher import match_frameworks
+from src.greenwashing import run_greenwashing_check, check_answer_for_flags
 
 log = logging.getLogger("renova.questionnaire")
 
@@ -160,7 +160,7 @@ class Stage1Engine:
         rt_flags = check_answer_for_flags(session, question_id, raw_answer)
         if rt_flags:
             if session.greenwashing_assessment is None:
-                from .models import GreenwashingRiskAssessment
+                from src.models import GreenwashingRiskAssessment
                 session.greenwashing_assessment = GreenwashingRiskAssessment()
             session.greenwashing_assessment.flags.extend(rt_flags)
             session.greenwashing_assessment.compute_overall_risk()
@@ -178,7 +178,7 @@ class Stage1Engine:
         })
 
     def _tool_flag_greenwashing(self, session: Session, args: dict) -> str:
-        from .models import GreenwashingFlag, GreenwashingRiskAssessment, FlagPriority, ClaimStatus
+        from src.models import GreenwashingFlag, GreenwashingRiskAssessment, FlagPriority
 
         priority_map = {
             "critical": FlagPriority.CRITICAL,

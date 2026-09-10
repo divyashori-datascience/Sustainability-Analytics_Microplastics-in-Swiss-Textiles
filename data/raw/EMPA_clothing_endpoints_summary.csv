@@ -1,0 +1,99 @@
+Polymer,Endpoint,Value
+LDPE,Landfill,0.0
+LDPE,Elimination,3715.74
+LDPE,Residential soil,0.10708
+LDPE,Second. material,0.0
+LDPE,Export,0.0
+LDPE,Textile reuse,0.0
+LDPE,Surface water,0.02194
+LDPE,Road side,0.4244
+LDPE,Natural soil,0.04802
+LDPE,Surface water (MP),0.00117
+LDPE,Subsurface (MP),0.00142
+LDPE,Residential soil (MP),0.00107
+LDPE,Natural soil (MP),0.00668
+LDPE,Agricultural soil (MP),0.00481
+HDPE,Landfill,0.0
+HDPE,Elimination,4126.08
+HDPE,Residential soil,0.12742
+HDPE,Second. material,0.0
+HDPE,Export,0.17284
+HDPE,Textile reuse,0.00078
+HDPE,Surface water,0.04281
+HDPE,Road side,1.1076
+HDPE,Natural soil,0.10782
+HDPE,Surface water (MP),0.01424
+HDPE,Subsurface (MP),0.03658
+HDPE,Residential soil (MP),0.00385
+HDPE,Natural soil (MP),0.02379
+HDPE,Agricultural soil (MP),0.0171
+PP,Landfill,0.0
+PP,Elimination,5695.2
+PP,Residential soil,0.14719
+PP,Second. material,0.0
+PP,Export,4.762
+PP,Textile reuse,0.02162
+PP,Surface water,0.03152
+PP,Road side,0.7336
+PP,Natural soil,0.07746
+PP,Surface water (MP),0.01139
+PP,Subsurface (MP),0.01792
+PP,Residential soil (MP),0.00985
+PP,Natural soil (MP),0.06232
+PP,Agricultural soil (MP),0.04392
+PS,Landfill,0.0
+PS,Elimination,2175.6
+PS,Residential soil,0.05351
+PS,Second. material,0.0
+PS,Export,0.0
+PS,Textile reuse,0.0
+PS,Surface water,0.00894
+PS,Road side,0.292
+PS,Natural soil,0.02582
+PS,Surface water (MP),0.0021
+PS,Subsurface (MP),0.00175
+PS,Residential soil (MP),0.00259
+PS,Natural soil (MP),0.01625
+PS,Agricultural soil (MP),0.01174
+EPS,Landfill,0.0
+EPS,Elimination,1246.98
+EPS,Residential soil,0.01383
+EPS,Second. material,0.0
+EPS,Export,0.0
+EPS,Textile reuse,0.0
+EPS,Surface water,0.00401
+EPS,Road side,0.2318
+EPS,Natural soil,0.00293
+EPS,Surface water (MP),0.0005
+EPS,Subsurface (MP),0.0
+EPS,Residential soil (MP),0.00078
+EPS,Natural soil (MP),0.00492
+EPS,Agricultural soil (MP),0.00352
+PVC,Landfill,0.0
+PVC,Elimination,3830.4
+PVC,Residential soil,0.03882
+PVC,Second. material,0.0
+PVC,Export,0.9264
+PVC,Textile reuse,0.00421
+PVC,Surface water,0.01117
+PVC,Road side,0.7186
+PVC,Natural soil,0.01507
+PVC,Surface water (MP),0.00355
+PVC,Subsurface (MP),0.00464
+PVC,Residential soil (MP),0.00299
+PVC,Natural soil (MP),0.01894
+PVC,Agricultural soil (MP),0.01349
+PET,Landfill,0.0
+PET,Elimination,4338.6
+PET,Residential soil,0.27088
+PET,Second. material,0.0
+PET,Export,16.11
+PET,Textile reuse,0.07306
+PET,Surface water,0.09699
+PET,Road side,2.492
+PET,Natural soil,0.2894
+PET,Surface water (MP),0.01608
+PET,Subsurface (MP),0.03049
+PET,Residential soil (MP),0.01036
+PET,Natural soil (MP),0.06552
+PET,Agricultural soil (MP),0.04796

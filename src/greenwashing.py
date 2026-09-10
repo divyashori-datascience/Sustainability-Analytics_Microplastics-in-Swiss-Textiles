@@ -7,7 +7,7 @@ Implements the flag logic from the Re:Nova methodology:
 - Computes an overall risk rating: Green / Amber / Red
 """
 from __future__ import annotations
-from .models import (
+from models import (
     Session, GreenwashingFlag, GreenwashingRiskAssessment,
     FlagPriority, ClaimStatus, OverallRisk
 )

@@ -24,6 +24,11 @@ Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
 │
 ├── analysis/
 │   └── time_series_monthly.Rmd
+    └──01_filter_textile_imports.R
+    └──02_aggregate_by_year.R
+    └──03_clothing_sankey.R
+    └──04_sensitivity_analysis.R
+    
 │
 └── outputs/
     ├── time_series_monthly.html
