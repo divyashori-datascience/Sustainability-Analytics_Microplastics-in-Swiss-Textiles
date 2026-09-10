@@ -1,35 +1,34 @@
-# The Synthetic Wardrobe
-### Microplastic Pollution from Synthetic Textiles in Switzerland
-
-HSLU Sustainability Analytics
-
-## Research questions
-1. What share of Swiss plastic pollution comes from synthetic clothing?
-2. How much of that could be avoided through fiber choice and extended garment lifespan?
-
-## Team
-| Member | Focus |
-|---|---|
-| Hanieh Jebeli | Intro/storyline, data sourcing, structural model -  RAG chatbot |
-| Divya Shori   | Agentic AI Assessment -  RAG chatbot -  Modeling |
-| Rana          |  
-
-## Repository structure
-```
-.
-├── R/                  Data pipeline, diagram, and sensitivity analysis (Hanieh's section)
-│   ├── 01_filter_textile_imports.R
-│   ├── 02_aggregate_by_year.R
-│   ├── 03_clothing_sankey.R
-│   └── 04_sensitivity_analysis.R
+Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
+│
+├── README.md
+├── __init__.py
+│
 ├── data/
-│   ├── raw/             Source datasets (SwissImpex, Empa)
-│   └── processed/       Pipeline outputs used by the model and slides
-├── python/              Agentic AI Assessment (Hanieh, Divya) — RAG-style brand verification tool
-├── time-series/         Time-series analysis (Divya)
-├── figures/             Diagrams and exported charts
-├── reports/             Deck notes / methodology write-ups
-└── README.md
+│   ├── raw/
+│   │   ├── EMPA_clothing_endpoints_summary.csv
+│   │   ├── PET_clothing_sankey_data.csv
+│   │   └── Plastics-by-Type_EMPA.csv
+│   │
+│   └── processed/
+│
+├── src/
+│   ├── __init__.py
+│   ├── models.py
+│   ├── tools.py
+│   ├── prompts.py
+│   ├── framework_matcher.py
+│   ├── greenwashing.py
+│   ├── questionnaire.py
+│   └── questions_stage1.py
+│
+├── analysis/
+│   └── time_series_monthly.Rmd
+│
+└── outputs/
+    ├── time_series_monthly.html
+    ├── time_series_monthly.tex
+    └── logs/
+        └── time_series_monthly.log
 ```
 
 ## Data pipeline (R)
