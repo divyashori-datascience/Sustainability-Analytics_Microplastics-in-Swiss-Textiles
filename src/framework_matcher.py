@@ -8,7 +8,7 @@ For each of the 26 frameworks: returns RELEVANT or EXCLUDED with a
 one-line explanation for the brand-facing Certification Relevance Map.
 """
 from __future__ import annotations
-from models import (
+from .models import (
     Session, FrameworkEntry, FrameworkRelevance, CertificationRelevanceMap
 )
 

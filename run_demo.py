@@ -7,9 +7,9 @@ This is meant to be dropped into the R Markdown / Jupyter / Quarto
 report as-is (a Python code chunk), right next to the limitation
 paragraph on keyword matching vs. real RAG.
 """
-from renova.models import Session
-from renova.framework_matcher import match_frameworks
-from renova.greenwashing import run_greenwashing_check
+from src.models import Session
+from src.framework_matcher import match_frameworks
+from src.greenwashing import run_greenwashing_check
 import pandas as pd
 
 pd.set_option("display.max_colwidth", 100)
