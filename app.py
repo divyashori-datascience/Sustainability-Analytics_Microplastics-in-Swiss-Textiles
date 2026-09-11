@@ -24,7 +24,7 @@ from src.framework_matcher import match_frameworks
 from src.greenwashing import run_greenwashing_check
 
 load_dotenv()
-CACHE_PATH = "business_summaries_cache.json"
+CACHE_PATH = "data/cache/business_summaries_cache.json"
 
 st.set_page_config(page_title="Re:Nova Verification Demo", layout="wide", page_icon="🌿")
 

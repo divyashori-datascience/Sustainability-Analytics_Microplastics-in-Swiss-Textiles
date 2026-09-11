@@ -11,6 +11,8 @@ Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
 │   │   ├── PET_clothing_sankey_data.csv
 │   │   └── Plastics-by-Type_EMPA.csv
 │   └── processed/
+    └── cache/
+        └── business_summaries_cache.json
 │
 ├── src/
 │   ├── __init__.py
