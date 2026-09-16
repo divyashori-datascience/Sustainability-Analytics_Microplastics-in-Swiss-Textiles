@@ -1,0 +1,504 @@
+---
+title: "Microplastics in Swiss Textiles: Quantifying Switzerland's Textile-driven Microplastic Footprint"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+    theme: readable
+    highlight: tango
+    code_folding: hide
+    fig_caption: true
+    self_contained: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center",
+  fig.width = 8,
+  fig.height = 4.2,
+  dpi = 160,
+  out.width = "100%"
+)
+library(tidyverse)
+library(scales)
+library(knitr)
+```
+
+```{css, echo=FALSE}
+p { text-align: justify; }
+.figure { margin: 1.2em 0 1.6em 0; }
+.caption, p.caption, .figcaption {
+  font-size: 0.92em;
+  font-style: italic;
+  text-align: center;
+  color: #333;
+}
+#TOC { font-size: 0.92em; }
+```
+
+# Abstract
+
+This project tries to answer a practical question: how much microplastic pollution in Switzerland comes from synthetic clothes, and what can we measure well enough to act on? Switzerland produces little clothing at home, almost all textiles are imported, worn, washed, and then discarded or exported. Synthetic fibres shed during use, and those fibres can reach water, soil, and air. Our aim is not only to report a number, but to turn an invisible load (how much plastic clothes shed) into a clear national estimate, a time-series forecast, and a tool that helps brands reduce it.
+
+We do this in four steps. First, we collect and clean official Swiss customs data (SwissImpex / FOCBS, also known as BAZG) for textile and apparel imports from 2012 to 2025. Import mass is measured, and a 69% synthetic share from Textile Exchange is then applied as a literature assumption. Second, we connect those imports to environmental release: clothes accumulate in use, washing sheds microfibres, wastewater treatment captures most of them, and the rest is released. We use shedding rates from De Falco et al. and capture rates from Conley et al., together with the EMPA polyester (PET) material-flow study for Switzerland (Kawecki & Nowack, 2019). Third, we analyse monthly patterns over 14 years, including the long-term trend, the 12-month cycle, the role of population, a forecast to 2030, and the delay caused by clothes already in wardrobes. Fourth, we build an agentic AI assessment that maps certifications, flags greenwashing, and ranks the fixes that matter most.
+
+Two questions guide all of this work: how much textile-derived microplastic pollution does Switzerland generate, and how much of that pollution can we confidently quantify? The report therefore separates what is observed (customs kilograms) from what is assumed (synthetic share, shedding, capture) and from what is modelled (EMPA flows and the monthly forecast). The intended result is a defensible Swiss footprint and a pathway from measurement to action through producer responsibility, not only consumer advice.
+
+*Keywords: microplastics; synthetic clothing; Switzerland; SwissImpex; material flow analysis; time series; agentic AI.*
+
+# 1. Introduction
+
+## 1.1 Fashion has become a plastics industry
+
+Microplastic pollution is not only a distant ocean statistic: it is already inside us. Leslie et al. (2022) found plastic particles in human blood, and Ragusa et al. (2021) found them in the placenta. Marine animals also ingest fibres and fragments, from plankton to whales (GESAMP, 2015), and those particles then enter food webs that people depend on. Synthetic fibres do not biodegrade in any useful sense: they fragment into smaller pieces that can persist in soil and water for centuries (Gewert, Plassmann, & MacLeod, 2015; ISO/TR 21960:2020). Measuring Switzerland's contribution, and identifying what is avoidable, matters beyond the numbers.
+
+About 69% of global fibre production is now synthetic, and about 59% of all fibre worldwide is polyester alone (Textile Exchange, Materials Market Report). Most commercial polyester is PET, and washing those garments releases microfibres to wastewater (Browne et al., 2011; Napper & Thompson, 2016; De Falco et al., 2018, 2019, 2020), and treatment plants capture many fibres, but they do not capture all of them (Conley et al., 2019; Sun et al., 2019). The IUCN estimates that synthetic textiles are the largest source of primary ocean microplastics, about 35% (Boucher & Friot, 2017). Switzerland has very limited domestic textile production, so its textile footprint is shaped by what it imports and consumes. Kawecki and Nowack (2019) show that about 40 times more plastic reaches Swiss soil than freshwater, and FOEN (2020) reaches a similar conclusion, so for a landlocked country, sewage sludge and soil matter as much as rivers.
+
+The target is to quantify Switzerland's textile-driven microplastic footprint, and then to ask how much of that footprint we can quantify with confidence. We do this in a transparent chain: official customs data measure import mass; a published EMPA study places polyester clothing in a national material flow account; literature values give shedding and wastewater capture; a monthly time-series model shows trend, season, population, forecast, and delay; and an agentic AI tool turns the same evidence into a brand score, greenwashing flags, and a ranked roadmap.
+
+# 2. Problem Statement
+
+The target of this project is to quantify Switzerland's textile-driven microplastic footprint. Plastic pollution also comes from tyres, packaging, and construction (FOEN, 2020). Clothes are easy to miss in a tonne-based list because their solid mass looks small, yet they still matter because they shed fibres while they are worn and washed (Henry et al., 2019; Kawecki & Nowack, 2019). We therefore keep two ideas apart: bulk plastic mass, and microplastic release during use.
+
+## 2.1 Research questions
+
+- Question 1. How much textile-derived microplastic pollution does Switzerland generate?
+- Question 2. How much of that pollution can we confidently quantify?
+
+To answer them we also need a few supporting questions: where does clothing polyester go after use; how large are Swiss textile imports, and how much of that mass is synthetic; and how does monthly pressure change from 2012 to 2025, and what happens if we do nothing until 2030?
+
+## 2.2 Scope and boundary
+
+Pollution masses in the analytics sections come from the EMPA PET material-flow account unless labelled otherwise, and import volumes come from SwissImpex. No characterisation factors (CO₂-equivalent, toxicity) are applied: this is a mass-flow and time-series analysis. Household and technical textiles appear with clothing in the first-release share chart (Figure 6); clothing is also reported on its own, at about 92 t year⁻¹. Claims about all seven EMPA polymers require the full polymer workbook, not only the PET sheet and not the inconsistent clothing-endpoints extract. Year 2026 in the current imports file is incomplete and is excluded from trend statements.
+
+The problem can be stated even more simply. Switzerland buys a lot of clothes, many of those clothes are plastic, and plastic clothes shed fibres. Those fibres are a pollution source even when the garment is later burned or sent abroad. If we only count tonnes of solid waste, clothing looks small next to packaging or construction; if we count first releases of microplastics, clothing looks large. That gap is the reason for this study. We do not claim that clothes are the only Swiss plastics problem: tyre wear, for example, is a major source in FOEN factsheets. We claim that clothes are easy to miss if the analyst looks only at bulk tonnes.
+
+Research Question 1 tells a ministry or a brand whether clothing is large enough to target, while Research Question 2 tells us which numbers are measured, which are assumed, and which are still too uncertain to use in a disclosure.
+
+We also state what this report does not do. It does not calculate climate impacts in CO₂-equivalent, it does not score human toxicity, and it does not cover every plastic used in Switzerland, only PET in the main mass tables, plus import tonnes for all textile fibres. It does not treat 2026 as a full year, and it does not mix the sankey extract or the endpoints extract into the official kilogram totals, because those files failed a unit check.
+
+# 3. Where the data come from
+
+This report uses four sources. Each one answers a different question, so we keep them apart. Official customs records tell us how much textile and clothing material entered Switzerland, in which month, and from which country. A published Swiss material-flow study tells us where polyester clothing goes after it is used, including the small share that leaves as microplastic fibres. Laundry experiments tell us why clothes shed fibres in the wash. Wastewater studies tell us how much of that fibre treatment plants catch.
+
+The first two sources provide the masses used later in the report. The last two sources explain the mechanism and support a simple teaching formula. They do not replace the Swiss clothing totals.
+
+## 3.1 Official import data (SwissImpex)
+
+The Federal Office for Customs and Border Security (FOCBS, also abbreviated BAZG) publishes Swiss foreign-trade statistics through SwissImpex. We start from the full import extract, accessed via opendata.swiss, and keep only two product groups:
+
+- CPA C13: textiles (yarns, fabrics, household textiles, carpets, non-wovens, and similar products).
+- CPA C14: wearing apparel (clothes).
+
+Amounts are recorded in kilograms. In this report we convert them to kilotonnes per year (1 kilotonne = 1,000 tonnes = 1,000,000 kg). The cleaned monthly file covers 2012 to 2025 and contains about 791,000 rows. Year 2026 is incomplete in the current extract (January to July only), so we never use it in trend statements.
+
+If a shipment of jackets enters Switzerland in March 2024, it should appear in that month as kilograms, with a product code and a country of origin. We use those official weights. We do not re-weigh the clothes.
+
+SwissImpex is strong on mass, timing, and origin. It is weaker on fibre type. A T-shirt can be cotton, polyester, or a blend, and the customs code does not always say which. That is why we later apply a synthetic-share assumption rather than reading fibre from every line.
+
+## 3.2 Swiss polyester flows (Kawecki & Nowack, 2019)
+
+Kawecki and Nowack (2019) estimated how seven common plastics move through Switzerland. We use their polyester (PET) results for clothing. The working file is `Plastics-by-Type_EMPA.csv`. The Mean column is in kilotonnes per year and is the mass layer we trust.
+
+In that account, clothing is one use of polyester. After use, most of the solid garment is incinerated or exported as used textiles. A much smaller amount leaves as tiny fibres while the clothes are worn and washed. EMPA counts those fibres in three places: wash water, indoor air, and outdoor air. Added together they are about 0.092 kilotonnes per year, which is about 92 tonnes per year.
+
+That 92-tonne figure is a first release: fibre leaving the garment. It is not "how much fibre is left in a Swiss river after the treatment plant." Many wash-water fibres are later caught in sludge. Section 6 (exploratory data analytics) uses this 92-tonne first-release total, not a new washing experiment.
+
+Supporting extracts (`PET_clothing_sankey_data.csv` and `EMPA_clothing_endpoints_summary.csv`) help us draw pathways. They are not used for official kilogram totals, because some values fail a unit check against EMPA Mean.
+
+## 3.3 Numbers from other studies
+
+How much fibre comes off in the wash comes from De Falco et al. (2018, 2019, 2020) and earlier wash studies (Browne et al., 2011; Napper & Thompson, 2016). How much treatment plants catch comes from Conley et al. (2019) and Sun et al. (2019). The global share of synthetic fibre, about 69%, comes from Textile Exchange. Swiss soil and water context comes from FOEN (2020) and from Kawecki and Nowack (2019), who show that about 40 times more plastic reaches Swiss soil than freshwater.
+
+These papers support the teaching formula in Sections 4 and 5. They do not replace the Swiss clothing totals from Kawecki and Nowack (2019).
+
+## 3.4 Working files and units
+
+Table 1 lists the files used in this report. A short unit rule matters more than the file names: SwissImpex stores kilograms; EMPA stores kilotonnes. Mixing those units is the most common error in this project. When we report 92 tonnes, that is 0.092 kilotonnes taken from the EMPA clothing row and converted to tonnes.
+
+```{r table-datasets}
+kable(
+  tibble(
+    File = c(
+      "textile_apparel_imports.csv",
+      "textile_imports_by_year.csv",
+      "Plastics-by-Type_EMPA.csv",
+      "PET_clothing_sankey_data.csv",
+      "EMPA_clothing_endpoints_summary.csv"
+    ),
+    `What it is` = c(
+      "Filtered SwissImpex microdata (CPA C13 and C14)",
+      "Yearly totals plus a 69% synthetic estimate",
+      "EMPA PET material-flow edges (Mean)",
+      "Clothing pathway diagram",
+      "Polymer × endpoint names"
+    ),
+    Unit = c(
+      "kg (convert ÷ 1,000,000 → kt)",
+      "kg year⁻¹",
+      "kt year⁻¹ (authoritative masses)",
+      "Mixed units; not for kg totals",
+      "Not safe for absolute masses"
+    )
+  ),
+  caption = "Table 1. Datasets used in this report.",
+  align = "l"
+)
+```
+
+# 4. Data cleaning
+
+The raw SwissImpex dump is about two gigabytes. It contains almost everything Switzerland trades, not only clothes. Cleaning means turning that extract into a textile dataset that can sit next to EMPA, with every step written down.
+
+## 4.1 From the raw customs file to the numbers we use
+
+We follow four steps. The sequence below is the map of the work.
+
+**Step 1. Keep only textiles and clothes.** We read the large CPA-6 import file in chunks and keep imports whose product group is C13 (textiles) or C14 (wearing apparel). Everything else is dropped. The result is the monthly file `textile_apparel_imports.csv`.
+
+**Step 2. Add up by year and estimate the synthetic share.** We sum kilograms by year and convert them to kilotonnes. We then apply a constant 69% synthetic-fibre share from Textile Exchange. That share is a literature assumption, not a fibre-by-fibre reading of each Swiss import line. The result is `textile_imports_by_year.csv`, with total mass and estimated synthetic mass for each year.
+
+**Step 3. Place clothing in the Swiss polyester system.** We use the EMPA clothing flows (Kawecki & Nowack, 2019) to follow clothing into mixed waste, textile collection, wastewater, and air. This step explains the pathway from clothing to the environment. Absolute masses still come from the PET Mean sheet, not from the sankey extract.
+
+**Step 4. Keep the bottom-up formula for teaching, not as a reported total.** The formula is: microplastics released ≈ synthetic imports × shedding rate × (1 − wastewater capture). Because capture enters as (1 − capture), a change in the wastewater capture rate scales the estimated release directly. We do not include a sensitivity table in this report. The wash-frequency input is not a Swiss measurement, so we do not use the 95–98 t/year result as a headline figure.
+
+## 4.2 Choices that change later results if they are handled badly
+
+**Incomplete year.** A 2026 yearly total would look like a sudden drop. That drop is missing months, not a real fall in demand. We stop every trend at 2025.
+
+**Synthetic share.** The annual file stores 69% in every year. When only rows with a named fibre are counted, the share sits near 55% (Section 7.8). Both numbers can be true under their own definitions. They must not be mixed without saying so. We treat 69% as the stored annual-file assumption and 55% as a competing measurement from named fibres.
+
+**Unit check.** The annual import file matches the monthly file summed by year. Several sankey edges are about 1,000 times larger than EMPA Mean. For example, clothing to textile waste is stored as 6,964 rather than 6.964 kt year⁻¹. Absolute masses in later sections therefore use SwissImpex kilograms and EMPA Mean only.
+
+# 5. System Maps
+
+The path from the raw customs extract to the files used later is described in Section 4. This section turns to how the clothing system is organised: a teaching stock-flow identity, three qualitative maps, and the governance timeline.
+
+## 5.1 Stock-flow identity
+
+Textile products enter Switzerland and accumulate in the in-use clothing stock, and two things then happen: the garment is eventually discarded, or, while it is still in use, washing and wear release microfibres. Wastewater treatment captures most fibres, and a residual fraction reaches the environment. A teaching identity used in the structural model is:
+
+> MP released ≈ synthetic imports × shedding rate × (1 − WWTP capture).
+
+where shedding and capture parameters are informed by De Falco et al. (2018, 2019, 2020) and Conley et al. (2019). Section 6 (Exploratory data analytics) does not use this formula to produce a new headline mass. It reports Swiss import totals (Figure 5) and EMPA first-release shares (Figure 6).
+
+In simple words: more imported clothes mean more fibres in homes. A higher shedding rate means more fibre comes off each wash. A higher catch rate at the treatment plant means less fibre reaches rivers. If we multiply these three ideas, we get a first estimate of environmental release. This is a teaching formula. Real life is messier: wash temperatures differ, some homes have filters, and clothes stay in use for years.
+
+## 5.2 Qualitative maps: people-products-planet, greenwashing, dynamics
+
+The value-chain map organises sustainable fashion into three interconnected pillars; people (labour, gender, access), products (fibres, logistics), and planet (carbon, water, biodiversity); linking production choices to environmental and social outcomes.
+
+```{r fig-1, out.width="100%", fig.cap="Figure 1. Value-chain map: People, Products, and Planet in sustainable fashion."}
+include_graphics("figures/fig01_people_products_planet.png")
+```
+
+Figure 1 is a reminder that clothing pollution is not only an environment topic. People includes pay, safety, gender, and whether sustainable clothes are affordable; products includes the fibre itself, dyes, transport, and how long a garment is designed to last; and planet includes carbon, water, and the living systems that receive waste and fibres. If a brand changes only the marketing story and not these three pillars, the map says the system has not really changed.
+
+This map puts brand claims in the middle. Recycling and slower fashion can cut carbon and water use. Unclear ads can hide waste, chemicals, unfair work, and ocean plastics.
+
+```{r fig-2, out.width="100%", fig.cap="Figure 2. Greenwashing-centred system map of fashion impacts and counter-loops."}
+include_graphics("figures/fig02_greenwashing_system_map.png")
+```
+
+Greenwashing matters a lot for this project because microfibres are easy to hide in a sustainability claim. A polyester garment can be sold as “eco” because it uses recycled bottles, while it still sheds plastic in the wash. Figure 2 places those claims in the middle so the reader can see both sides: useful actions such as recycling and slower fashion, and harmful links such as waste, chemicals, unfair pay, and ocean plastics. Section 8 later turns this idea into a checklist of certifications and flags.
+
+This sketch shows two cycles. Fast fashion adds more clothes and more fibre pollution. Slower fashion, clothes that last longer and shed less, works the other way. Rising microplastics also harm nature.
+
+```{r fig-3, out.width="100%", fig.cap="Figure 3. System-dynamics map: fast fashion, slow fashion, and ecological feedback."}
+include_graphics("figures/fig03_system_dynamics.png")
+```
+
+Figure 3 can be read as two stories that run at the same time. In the fast fashion story, cheap new clothes keep entering homes, more washes happen, and more fibres reach the environment. That is a reinforcing loop: more product leads to more pollution, which does not automatically slow the business model. In the slow fashion story, people keep clothes longer and choose fibres that shed less, which is a balancing loop. The top of the map adds ecology: if microplastics rise, living systems are harmed.
+
+## 5.3 Sustainable Development Goals and governance context
+
+The Sustainable Development Goals are our benchmark (United Nations, 2015). Goal 12 is the core: synthetic clothing is made and discarded faster than the planet can absorb its microfibre. Goal 6 is clean water: fibres shed in the wash slip through treatment into rivers and lakes. Goal 14 is life below water: synthetic textiles are the largest source of primary ocean microplastics, about 35% (Boucher & Friot, 2017). Goal 15 is life on land: in landlocked Switzerland fibres also reach farmland soil through sewage sludge. Goal 13 is climate: polyester is fossil-based and about 59% of all fibre (Textile Exchange). Goal 9 is our response: cleaner fibres, capture technology, and the agentic AI verification tool. Figure 4 places that agenda in a timeline of rules and test methods.
+
+```{r fig-4, out.width="90%", fig.cap="Figure 4. Governance timeline for microplastics (EU REACH, ISO, UNEA, FOEN)."}
+include_graphics("figures/fig04_limits_to_growth.png")
+```
+
+This figure shows the main rules. In 2023 the EU limited plastic particles that companies add on purpose (European Commission, 2023). That law is not about washing machines, but it shows the direction: measure plastic particles and make companies respond. Shared test rules also exist (ISO 24187:2023). Talks on a global plastics treaty have started (UNEP, 2022). Brands will still need supplier data and honest claims. That leads to Section 8.
+
+Fashion is a systems problem. Synthetic-fibre output is still rising, and microplastic pollution is the accumulating overshoot. The planetary boundary for novel entities, including plastics, was reported as crossed in 2022 (Persson et al., 2022), which is why we model microfibre as a system with stocks, flows, delays, and inertia, not as a one-year snapshot only.
+
+# 6. Exploratory Data Analytics
+
+This section has two results. Figure 5 shows how many kilotonnes of textiles and apparel enter Switzerland each year. Figure 6 uses the EMPA PET account to show how large clothing and other textiles are among first microplastic releases.
+
+Figures 5 and 6 appear once, from the Word draft. Collapsible R chunks show the code that produced them. Click **Code** on a chunk (or **Show / Hide code** at the top) to inspect the analysis.
+
+```{r eda-load, include=FALSE}
+library(tidyverse)
+library(scales)
+library(knitr)
+
+KG_PER_KT <- 1e6
+col_dark   <- "#2f3e46"
+col_mid    <- "#52796f"
+col_accent <- "#9b2226"
+col_soft   <- "#84a98c"
+
+annual_raw <- read_csv("textile_imports_by_year.csv", show_col_types = FALSE)
+empa_raw <- read_delim("Plastics-by-Type_EMPA.csv", delim = ";", show_col_types = FALSE)
+
+annual <- annual_raw %>%
+  mutate(
+    total_kt = total_imported_kg / KG_PER_KT,
+    synthetic_kt = estimated_synthetic_kg / KG_PER_KT,
+    synthetic_share = estimated_synthetic_kg / total_imported_kg,
+    complete_year = year <= 2025
+  )
+
+empa <- empa_raw %>%
+  rename(from = From, to = To, mean_kt = Mean)
+
+cat("Annual import rows:", nrow(annual),
+    "| years:", min(annual$year), "–", max(annual$year), "\n")
+cat("EMPA PET edges:", nrow(empa),
+    "| unique From nodes:", n_distinct(empa$from), "\n")
+glimpse(annual)
+```
+
+```{r eda-quality, include=FALSE}
+# Missing values and the incomplete 2026 year
+annual_qc <- annual %>%
+  summarise(
+    n_years = n(),
+    n_incomplete = sum(!complete_year),
+    missing_kg = sum(is.na(total_imported_kg)),
+    min_share = min(synthetic_share),
+    max_share = max(synthetic_share),
+    mean_total_kt_2012_2025 = mean(total_kt[complete_year]),
+    mean_synthetic_kt_2012_2025 = mean(synthetic_kt[complete_year])
+  )
+
+kable(
+  annual_qc %>%
+    transmute(
+      Years = n_years,
+      `Incomplete years` = n_incomplete,
+      `Missing kg cells` = missing_kg,
+      `Synthetic share (min)` = round(min_share, 3),
+      `Synthetic share (max)` = round(max_share, 3),
+      `Mean total kt (2012–2025)` = round(mean_total_kt_2012_2025, 1),
+      `Mean synthetic kt (2012–2025)` = round(mean_synthetic_kt_2012_2025, 1)
+    ),
+  caption = "Quality check on textile_imports_by_year.csv. The synthetic share is a constant 69% assumption, not a measured fibre mix.",
+  align = "c"
+)
+```
+
+```{r eda-annual-table, include=FALSE}
+kable(
+  annual %>%
+    transmute(
+      Year = year,
+      `Total imports (kt)` = round(total_kt, 1),
+      `Estimated synthetic (kt)` = round(synthetic_kt, 1),
+      `Synthetic share` = percent(synthetic_share, accuracy = 1),
+      Status = if_else(complete_year, "Used in Figure 5", "Omitted (incomplete)")
+    ),
+  caption = "Annual Swiss textile and apparel imports. Kilotonnes = kilograms ÷ 1,000,000.",
+  align = c("c", "r", "r", "c", "l")
+)
+```
+
+## 6.1 How much clothing material does Switzerland import?
+
+Swiss textile and apparel imports stayed near 271 kt year⁻¹ from 2012 to 2025. The cleaned annual series runs from about 251 kt in 2012 to a peak of about 291 kt in 2022, then dips in 2023 and rises again toward about 284 kt in 2025. Year 2026 is incomplete and is omitted. The synthetic share stored in `textile_imports_by_year.csv` is 69% in every year, or about 187 kt year⁻¹ of estimated synthetic fibre. That 69% is a constant assumption in the annual file, not a year-by-year fibre count.
+
+```{r fig-5-word, out.width="90%", fig.cap="Figure 5. Swiss textile and apparel import mass, 2012–2025. Year 2026 omitted. Source: textile_imports_by_year.csv (SwissImpex)."}
+include_graphics("figures/fig05_textile_imports.png")
+```
+
+The dashed line is not a second measurement from customs. It is the same solid line multiplied by 69% in every year (Textile Exchange’s global synthetic-fibre share). The point for microplastics is the level, not a spike. Switzerland already imports a large, fairly stable mass of clothing and textiles. Those garments shed every year they are worn and washed, even when the import line is almost flat.
+
+```{r fig-5-code, echo=TRUE, eval=FALSE}
+plot_imp <- annual %>%
+  filter(complete_year) %>%
+  select(year, `Total imports` = total_kt, `Estimated synthetic` = synthetic_kt) %>%
+  pivot_longer(-year, names_to = "series", values_to = "kt")
+
+ggplot(plot_imp, aes(year, kt, colour = series, linetype = series)) +
+  geom_line(linewidth = 0.9) +
+  geom_point(size = 1.8) +
+  scale_colour_manual(
+    values = c("Total imports" = col_dark, "Estimated synthetic" = col_mid)
+  ) +
+  scale_linetype_manual(
+    values = c("Total imports" = "solid", "Estimated synthetic" = "dashed")
+  ) +
+  scale_x_continuous(breaks = seq(2012, 2025, 2)) +
+  labs(
+    x = NULL, y = "kt / year", colour = NULL, linetype = NULL,
+    subtitle = "Source: textile_imports_by_year.csv"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(legend.position = "bottom", panel.grid.minor = element_blank())
+```
+
+## 6.2 Clothing’s share of PET microplastics versus other sources
+
+```{r eda-clothing-mp, echo=TRUE}
+textile_use <- c(
+  "Clothing", "Household textiles", "Technical clothing",
+  "Technical household text.", "Agrotextiles", "Geotextiles"
+)
+
+cloth_out <- empa %>%
+  filter(from == "Clothing", mean_kt > 0) %>%
+  mutate(
+    kind = if_else(grepl("\\(MP\\)", to), "Microplastic release", "Solid outflow"),
+    tonnes = mean_kt * 1000
+  )
+
+cloth_mp_kt <- sum(cloth_out$mean_kt[cloth_out$kind == "Microplastic release"])
+
+kable(
+  cloth_out %>%
+    arrange(desc(mean_kt)) %>%
+    transmute(
+      Destination = to,
+      Kind = kind,
+      `kt year⁻¹` = signif(mean_kt, 4),
+      `t year⁻¹` = signif(tonnes, 4)
+    ),
+  caption = "Clothing outflows in the EMPA PET account (Mean). Microplastic rows are first releases from the garment.",
+  align = c("l", "l", "r", "r")
+)
+
+cat(
+  "Clothing first-release microplastics:",
+  round(cloth_mp_kt * 1000, 1), "t year⁻¹ (",
+  signif(cloth_mp_kt, 3), "kt year⁻¹).\n"
+)
+```
+
+Figure 6 groups first PET microplastic releases by source sector. Textiles and clothing together, clothing, household textiles, technical textiles, agrotextiles, and geotextiles, account for about 86% of those first releases, or about 144 t year⁻¹. Other supply-chain flows are about 13%, packaging about 1%, and other products effectively 0%. Clothing alone, inside that textile group, is about 92 t year⁻¹, or about 55% of all PET first releases. For bulk solid plastic mass leaving use, packaging routes remain large. The pollution concern specific to clothing is continuous shedding during use, not landfill dominance.
+
+```{r eda-mp-sectors, echo=TRUE}
+# First releases: flow from a non-MP source into an MP compartment
+mp_first <- empa %>%
+  filter(grepl("\\(MP\\)", to), !grepl("\\(MP\\)", from), mean_kt > 0)
+
+mp_by_sector <- mp_first %>%
+  mutate(
+    sector = case_when(
+      from %in% textile_use ~ "Textiles & clothing",
+      grepl("Packaging|Consumer|Pack", from) ~ "Packaging",
+      grepl("Auto|EEE|Construction|Household", from) ~ "Other products",
+      TRUE ~ "Other supply chain"
+    )
+  ) %>%
+  group_by(sector) %>%
+  summarise(kt = sum(mean_kt), .groups = "drop") %>%
+  mutate(
+    tonnes = kt * 1000,
+    share = kt / sum(kt)
+  ) %>%
+  arrange(desc(kt))
+
+kable(
+  mp_by_sector %>%
+    transmute(
+      Sector = sector,
+      `kt year⁻¹` = round(kt, 4),
+      `t year⁻¹` = round(tonnes, 1),
+      Share = percent(share, accuracy = 1)
+    ),
+  caption = "First PET microplastic releases by source sector. Textiles and clothing dominate this metric.",
+  align = c("l", "r", "r", "c")
+)
+
+cat(
+  "Clothing share of all PET first releases:",
+  percent(cloth_mp_kt / sum(mp_first$mean_kt), accuracy = 1), "\n"
+)
+```
+
+```{r fig-6-word, out.width="85%", fig.cap="Figure 6. Share of first microplastic releases in the PET model, by source sector. Source: Plastics-by-Type_EMPA.csv (EMPA PET MFA)."}
+include_graphics("figures/fig06_mp_first_releases.png")
+```
+
+```{r fig-6-code, echo=TRUE, eval=FALSE}
+ggplot(mp_by_sector, aes(kt, reorder(sector, kt), fill = sector)) +
+  geom_col(width = 0.7, show.legend = FALSE) +
+  scale_fill_manual(values = c(
+    "Textiles & clothing" = col_accent,
+    "Packaging" = col_mid,
+    "Other products" = col_soft,
+    "Other supply chain" = col_dark
+  )) +
+  geom_text(aes(label = paste0(round(100 * share, 0), "%")), hjust = -0.1, size = 3.5) +
+  scale_x_continuous(expand = expansion(mult = c(0, 0.18))) +
+  labs(
+    y = NULL, x = "kt / year (microplastic releases)",
+    subtitle = "Source: Plastics-by-Type_EMPA.csv — PET MFA, first MP releases"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(panel.grid.major.y = element_blank(), panel.grid.minor = element_blank())
+```
+
+Figure 6 answers Research Question 1 inside the PET model. The long red bar is the result the figure is built to show: textiles and clothing dominate first microplastic releases. Packaging and other products are much smaller on this particular metric. That does not mean packaging is clean. Packaging can dominate solid plastic tonnes. It means that if the question is “what first releases PET microplastics in this Swiss account?”, textiles are the hotspot.
+
+The boundary matters. First releases are flows from a non-microplastic source into a microplastic compartment. We do not double-count fibres that already sit in wastewater and then move to sludge. We also do not jump from PET to “all Swiss plastics.” Tyres, for example, are a major microplastic source in FOEN material, but they are not PET clothing. The precise sentence is: among PET first releases, clothing dominates; among all Swiss plastics, other sources still matter.
+
+# 7. Time Series Analysis
+
+# 8. Agentic AI assessment
+
+# 9. Results and Conclusion
+
+# References
+
+Boucher, J., & Friot, D. (2017). Primary microplastics in the oceans: A global evaluation of sources. Gland, Switzerland: IUCN.
+
+Browne, M. A., Crump, P., Niven, S. J., Teuten, E., Tonkin, A., Galloway, T., & Thompson, R. (2011). Accumulation of microplastic on shorelines worldwide: Sources and sinks. *Environmental Science & Technology*, 45(21), 9175-9179. https://doi.org/10.1021/es201811s
+
+Conley, K., Clum, A., Deepe, J., Lane, H., & Beckingham, B. (2019). Wastewater treatment plants as a source of microplastics to an urban estuary: Removal efficiencies and loading per capita over one year. *Water Research X*, 3, 100030. https://doi.org/10.1016/j.wroa.2019.100030
+
+De Falco, F., Gullo, M. P., Gentile, G., Di Pace, E., Carfagna, C., & Avella, M. (2018). Evaluation of microplastic release caused by textile washing processes of synthetic fabrics. *Environmental Pollution*, 236, 916-925. https://doi.org/10.1016/j.envpol.2017.10.057
+
+De Falco, F., Di Pace, E., Avella, M., & Thompson, R. C. (2019). The contribution of washing processes of synthetic clothes to microplastic pollution. *Scientific Reports*, 9, 6633. https://doi.org/10.1038/s41598-019-43023-x
+
+De Falco, F., Cocca, M., Avella, M., & Thompson, R. C. (2020). Microfiber release to water, via laundering, and to air, via everyday use: A comparison between polyester clothing with differing textile parameters. *Environmental Science & Technology*, 54(6), 3288-3296. https://doi.org/10.1021/acs.est.9b06878
+
+European Commission. (2023). Commission Regulation (EU) 2023/2055 amending Annex XVII to Regulation (EC) No 1907/2006 (REACH) as regards synthetic polymer microparticles. Official Journal of the European Union.
+
+Federal Office for Customs and Border Security (FOCBS). SwissImpex foreign trade statistics. Swiss Confederation. https://www.swiss-impex.admin.ch/
+
+Federal Office for the Environment (FOEN / BAFU). (2020). Plastics in the environment: Overview of current knowledge and Factsheet No. 6 (Tyre abrasion). Bern: Swiss Confederation.
+
+GESAMP. (2015). Sources, fate and effects of microplastics in the marine environment: A global assessment (Kershaw, P. J., Ed.). IMO/FAO/UNESCO-IOC/UNIDO/WMO/IAEA/UN/UNEP/UNDP Joint Group of Experts on the Scientific Aspects of Marine Environmental Protection.
+
+Gewert, B., Plassmann, M. M., & MacLeod, M. (2015). Pathways for degradation of plastic polymers floating in the marine environment. *Environmental Science: Processes & Impacts*, 17, 1513-1521. https://doi.org/10.1039/C5EM00207A
+
+Henry, B., Laitala, K., & Klepp, I. G. (2019). Microfibres from apparel and home textiles: Prospects for including microplastics in environmental sustainability assessment. *Science of the Total Environment*, 652, 483-494. https://doi.org/10.1016/j.scitotenv.2018.10.178
+
+International Organization for Standardization. (2020). Plastics - Environmental aspects - State of knowledge and methodologies (ISO/TR 21960:2020).
+
+International Organization for Standardization. (2023). Principles for the analysis of microplastics in the environment (ISO 24187:2023).
+
+Kawecki, D., & Nowack, B. (2019). Polymer-specific dynamic probabilistic material flow analysis of seven polymers in Switzerland. *Environmental Science & Technology*, 53(16), 9665-9675. https://doi.org/10.1021/acs.est.9b02984
+
+Leslie, H. A., van Velzen, M. J. M., Brandsma, S. H., Vethaak, A. D., Garcia-Vallejo, J. J., & Lamoree, M. H. (2022). Discovery and quantification of plastic particle pollution in human blood. *Environment International*, 163, 107199. https://doi.org/10.1016/j.envint.2022.107199
+
+Napper, I. E., & Thompson, R. C. (2016). Release of synthetic microplastic fibres from domestic washing machines: Effects of fabric type and washing conditions. *Marine Pollution Bulletin*, 112(1-2), 39-45. https://doi.org/10.1016/j.marpolbul.2016.09.025
+
+Persson, L., Carney Almroth, B. M., Collins, C. D., Cornell, S., de Wit, C. A., Diamond, M. L., ... Zwicky Hauschild, M. (2022). Outside the safe operating space of the planetary boundary for novel entities. *Environmental Science & Technology*, 56(3), 1510-1521. https://doi.org/10.1021/acs.est.1c04158
+
+Ragusa, A., Svelato, A., Santacroce, C., Catalano, P., Notarstefano, V., Carnevali, O., … Giorgini, E. (2021). Plasticenta: First evidence of microplastics in human placenta. *Environment International*, 146, 106274. https://doi.org/10.1016/j.envint.2020.106274
+
+Sun, J., Dai, X., Wang, Q., van Loosdrecht, M. C. M., & Ni, B.-J. (2019). Microplastics in wastewater treatment plants: Detection, occurrence and removal. *Water Research*, 152, 21-37. https://doi.org/10.1016/j.watres.2018.12.050
+
+Textile Exchange. (various years). Materials Market Report. Textile Exchange.
+
+United Nations. (2015). Transforming our world: The 2030 Agenda for Sustainable Development. New York: United Nations.
+
+United Nations Environment Programme (UNEP). (2022). End plastic pollution: Towards an international legally binding instrument (UNEP/EA.5/Res.14). Nairobi: United Nations Environment Assembly.
