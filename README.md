@@ -5,10 +5,14 @@
 ```text
 Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
 ├── README.md
-├── app.py                          # Streamlit demo — verification engine dashboard
-├── run_demo.py                     # Non-interactive script: 3 example brands through the engine
+├── .env                                              
+├── .gitignore
+├── app.py                                            # Streamlit demo — verification engine dashboard 
+├── run_demo.py                                       # Non-interactive script: 3 example brands through the engine 
 ├── requirements.txt
-├── __init__.py
+├── Block Week Presentation.pdf
+├── Microplastics_in_Swiss_Textiles_Final Report.Rmd  # final report — source
+├── Microplastics_in_Swiss_Textiles_Final Report.html # final report — rendered
 │
 ├── data/
 │   ├── raw/
@@ -19,17 +23,17 @@ Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
 │   │   ├── textile_apparel_imports.csv
 │   │   └── textile_imports_by_year.csv
 │   └── cache/
-│       └── business_summaries_cache.json   # cached AI-generated summaries (see below)
+│       └── business_summaries_cache.json             # cached AI-generated summaries 
 │
-├── src/                             # Re:Nova verification engine
+├── src/                                               # Re:Nova verification engine
 │   ├── __init__.py
-│   ├── models.py                    # Session, FrameworkEntry, GreenwashingFlag, etc.
+│   ├── models.py                                      # Session, FrameworkEntry, GreenwashingFlag, etc.
 │   ├── tools.py
 │   ├── prompts.py
-│   ├── framework_matcher.py         # certification relevance matching
-│   ├── greenwashing.py              # greenwashing risk / flag logic
-│   ├── questionnaire.py             # Stage 1 chatbot intake engine
-│   └── questions_stage1.py          # the 21-question Stage 1 intake, by pillar
+│   ├── framework_matcher.py                           # certification relevance matching
+│   ├── greenwashing.py                                # greenwashing risk / flag logic
+│   ├── questionnaire.py                                # Stage 1 chatbot intake engine
+│   └── questions_stage1.py                             # the 21-question Stage 1 intake, by pillar
 │
 ├── analysis/
 │   ├── time_series_monthly.Rmd
@@ -39,10 +43,13 @@ Sustainability-Analytics_Microplastics-in-Swiss-Textiles/
 │   └── 04_sensitivity_analysis.R
 │
 └── outputs/
+    ├── Microplastics_in_Swiss_Textiles.Rmd
+    ├── Microplastics_in_Swiss_Textiles.html
     ├── time_series_monthly.html
     ├── time_series_monthly.tex
     └── logs/
         └── time_series_monthly.log
+
 ```
 
 ## Data pipeline (R)
